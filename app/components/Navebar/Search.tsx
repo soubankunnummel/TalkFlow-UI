@@ -7,7 +7,7 @@ function SearchBtn() {
   const pathname = usePathname();
 
 
-  const isActive = pathname === '/pages/search';
+  const isActive = pathname === '/search';
 
   return ( 
     <button

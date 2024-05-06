@@ -15,22 +15,22 @@ function Footer() {
             <HomeBtn />
           </div>
         </Link>
-        <Link href={"/pages/search"}>
+        <Link href={"/search"}>
           <div>
             <SearchBtn />
           </div>
         </Link>
         <Link href={"/"}>
-          <div>
+          {/* <div>
             <CreatBtn />
-          </div>
+          </div> */}
         </Link>
-        <Link href={"/pages/activity"}>
+        <Link href={"/activity"}>
           <div>
             <ActivityBtn />
           </div>
         </Link>
-        <Link href={"/pages/@user"}>
+        <Link href={"/@user"}>
           <div>
             <UserBtn />
           </div>

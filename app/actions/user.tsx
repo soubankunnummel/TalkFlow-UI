@@ -1,0 +1,13 @@
+import Axios from "../config/axios"
+
+
+export const UserLogin = async (data:object) => {
+    try {
+        const res = await Axios.post('/login',data)
+        if(res.status === 200){
+            return res.data
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
