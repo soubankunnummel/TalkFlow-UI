@@ -30,7 +30,7 @@ function Nave() {
   }else {
     toast.error("pleas Login")
   }
-  };
+  }; 
   
   return (
     <nav className="sticky top-0  z-40 ">

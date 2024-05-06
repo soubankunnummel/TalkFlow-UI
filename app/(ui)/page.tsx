@@ -14,7 +14,7 @@ export default function Home() {
       
       <div className="flex justify-center items-center flex-col ">
         <PostHead />
-        {/* <ProtectRoute/> */}
+        <ProtectRoute/>
         <FollowForyou />
         <Post />
         <Post />

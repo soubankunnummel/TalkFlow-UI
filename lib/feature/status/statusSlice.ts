@@ -22,7 +22,7 @@ export const statusSclice = createSlice ({
         setLogged: (state, action :PayloadAction<boolean>) => {
             state.isLogdin = action.payload;
 
-        },
+        }, 
          
     }
 

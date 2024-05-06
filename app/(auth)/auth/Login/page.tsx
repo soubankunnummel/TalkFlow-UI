@@ -9,6 +9,7 @@ import {useRouter} from 'next/navigation'
 import Cookies from 'js-cookie'
 import { useDispatch } from "react-redux";
 import { setLogged } from "@/lib/feature/status/statusSlice";
+import { toast } from "sonner";
 
 interface LoginForm {
   username: string
@@ -23,13 +24,15 @@ function Login() {
 
   const onsubmit = async (data:LoginForm) => {
   const res = await UserLogin(data) 
-   if(res) {
+  if(res?.response?.status === 401){
+    return toast.error(res.response.data.error)
+  }else {
     Cookies.set("token",res.token);
     dispatch(setLogged(true))
-    router.push('/')
-   }
-
+     router.push('/')
   }
+   
+  } 
 
 
 
