@@ -140,7 +140,9 @@ export default function Chat() {
                     <h1>{msg.sender === senderId ? "You" : username} </h1>
                   </div>
                 </div>
+               
               ))}
+           
               
             
             </div>
