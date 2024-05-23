@@ -3,9 +3,12 @@ import axios from 'axios';
 import Cookie from 'js-cookie';
 
 const Axios = axios.create({
-    baseURL:  process.env.NODE_ENV === 'production' 
-              ? 'https://talk-flow-sever2.onrender.com' 
-              : 'http://localhost:8000/api',
+    // baseURL:  process.env.NODE_ENV === 'production' 
+    //           ? 'https://talk-flow-sever2.onrender.com' 
+    //           : 'http://localhost:8000/api',
+    baseURL: 'https://talk-flow-sever2.onrender.com/api' ,
+    // baseURL: 'http://localhost:8000/api',
+    
     headers:{
         "Content-Type": "application/json",
         Authorization: Cookie.get('token')

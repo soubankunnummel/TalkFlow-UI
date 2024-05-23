@@ -39,11 +39,11 @@ export default function Chat() {
 
     socket.emit("join_room", room);
     getCurrentUser().then((res:any) => {
-      setSenderId(res.data._id);
+      setSenderId(res?.data?._id);
     });
 
     getUserProfile(username).then((res: any) => {
-      setReceiverId(res.data._id);
+      setReceiverId(res?.data?._id);
     });
 
     socket.on("receive_message", (data: Message) => {
@@ -142,9 +142,7 @@ export default function Chat() {
                 </div>
                
               ))}
-           
-              
-            
+
             </div>
             </ScrollToBottom>
           <div className="w-full flex justify-between items-center gap-2 p-3">
