@@ -4,7 +4,7 @@ import Image from "next/image";
 import React from "react";
 import header from "@/public/svg/header.svg";
 import {useForm} from 'react-hook-form'
-import { UserLogin } from "@/app/actions/user";
+import { UserLogin } from "@/app/actions/auth";
 import {useRouter} from 'next/navigation'
 import Cookies from 'js-cookie'
 import { useDispatch } from "react-redux";
@@ -19,8 +19,10 @@ interface LoginForm {
 
 function Login() {
   const dispatch = useDispatch()
+  const token = Cookies.get("token")
+  
   const {register,handleSubmit,setError} = useForm<LoginForm> ()
-  const  router=useRouter();
+  const  router = useRouter();
 
   const onsubmit = async (data:LoginForm) => {
   const res = await UserLogin(data) 
@@ -66,7 +68,7 @@ function Login() {
             value="Login"
             name=""
             id=""
-            className="w-[370px] h-[55px] rounded-[12px] p-4 text-[#999999] bg-white  "
+            className="w-[370px] hover:text-black h-[55px] rounded-[12px] p-4 text-[#999999] bg-white  "
           />
           <h1 className="text-[#999999] text-center text-[14px] ">Forgot Password</h1>
          <div className="flex justify-between items-center gap-x-5">
@@ -80,8 +82,6 @@ function Login() {
   );
 }
 
-// TODO:add login with clerck
 
-// TODO: aadd redux
 
 export default Login;

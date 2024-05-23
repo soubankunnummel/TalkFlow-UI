@@ -5,12 +5,15 @@ import img from "@/public/assets/pachu.svg";
 import thread from "@/public/assets/threds.net.svg";
 import Followbtn from "../Search/Followbtn";
 import WhiteFollowBtn from "./WhiteFollowBtn";
+import { getUserProfile } from "@/app/actions/user"; 
 
 interface UserNameProps {
   name: string;
+  username:string
+  onClick: (username: string) => void;
 }
 
-const UserName: React.FC<UserNameProps> = ({ name }) => {
+const UserName: React.FC<UserNameProps> = ({ name , username, onClick }) => {
   const modalRef = useRef<HTMLInputElement>(null);
   const [status, setStatus] = useState(false);
 
@@ -30,6 +33,9 @@ const UserName: React.FC<UserNameProps> = ({ name }) => {
     return spaceBelow;
   };
 
+ 
+
+ 
   return (
     <div className="relative" onMouseLeave={handleMouseLeave}>
       <h4 className="text-[14.8px] font-semibold text-white hover:underline font-roboto relative">
@@ -37,10 +43,15 @@ const UserName: React.FC<UserNameProps> = ({ name }) => {
           onMouseEnter={handleMouseEnter}
           // onMouseLeave={handleMouseLeave}
           ref={modalRef}
+          onClick={() => onClick(username)}
         >
-          {name}
+          {username}
         </span>
       </h4>
+
+      {/*///////////// user tol tip //////////////*/}
+
+
       <div
         className={`${
           status ? "flex" : "hidden"
@@ -52,9 +63,9 @@ const UserName: React.FC<UserNameProps> = ({ name }) => {
         <div className=" p-[4%] flex  justify-between ">
           <div className="grid grid-cols-2 grid-rows-2  ">
             <h3 className="flex-1 text-[20px] font-bold font-roboto col-span-2 ">
-              Ibnu kadhir
+              {name}
             </h3>
-            <p className="text-[14.1px] font-roboto row-start-2">fayis_vtp</p>
+            <p className="text-[14.1px] font-roboto row-start-2">{username} </p>
             <Image alt="thres.net " src={thread} className="row-start-2" />
           </div>
           <Image alt="user image" src={img} className="flex-initial" />

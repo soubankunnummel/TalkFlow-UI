@@ -14,7 +14,7 @@ export default function CreatBtn({handleButtonClick}: CreatBtnProps) {
       // onClick={handleButtonClick}
     >
       <svg
-        width="26"
+        width="26" 
         height="26"
         viewBox="0 0 26 26"
         fill="none"

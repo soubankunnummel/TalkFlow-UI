@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import Cookie from 'js-cookie'
 import { useRouter ,usePathname} from "next/navigation";
 import { useDispatch } from 'react-redux';
-import { setLogged } from '@/lib/feature/status/statusSlice';
+import { setLogged, setToken } from '@/lib/feature/status/statusSlice';
 
 
 export default function ProtectRoute() {
@@ -17,11 +17,13 @@ export default function ProtectRoute() {
         if (!token && pathname !== "auth/Login") {
           router.push("/");
           dispatch(setLogged(false))
+          dispatch(setToken(false))
         }else if(!token && pathname === "auth/Login") {
           router.push('/auth/Login')
         }
         else {
           dispatch(setLogged(true))
+          dispatch(setToken(true))
         }
         console.log(`wrong!!`)
       })

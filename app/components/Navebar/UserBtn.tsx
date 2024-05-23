@@ -1,11 +1,11 @@
-'use client'
+"use client";
 
 import React from "react";
 import { usePathname } from "next/navigation";
 
 export default function UserBtn() {
   const pathname = usePathname();
-  const isActive = pathname === "/@user";
+  const isActive  = /^\/@[^/]+(\/(replies|reposts)?)?$/.test(pathname);
   return (
     <button
       className={`w-24 h-[70px] md:w-[82.4px] md:h-[68px] rounded-xl hover:bg-[#FFFFFF0D] flex justify-center items-center ${

@@ -1,5 +1,14 @@
 import type { Config } from "tailwindcss";
 
+
+interface TailwindUtilities {
+  'no-scrollbar': {
+    'scrollbar-width': 'none';
+    '&::-webkit-scrollbar': {
+      display: 'none';
+    };
+  };
+}
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -43,6 +52,21 @@ const config: Config = {
       // },
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui"),
+  function ({ addUtilities  }: any) {
+    addUtilities({
+      '.no-scrollbar': {
+        /* Firefox */
+        'scrollbar-width': 'none',
+        /* Safari and Chrome */
+        '&::-webkit-scrollbar': {
+          display: 'none',
+        },
+      },
+    });
+  },
+  ],
 };
+
+
 export default config;

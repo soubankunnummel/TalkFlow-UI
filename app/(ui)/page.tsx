@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import FollowForyou from "../components/Post/FollowForyou";
 import Post from "../components/Post/Post";
 import PostHead from "../components/Post/PostHead";
-import { RooteState } from "@/lib/store";
-import ProtectRoute from "../components/commen/ProtectRoute";
+// import { RooteState } from "@/lib/store";
+// import ProtectRoute from "../components/commen/ProtectRoute";
 
 export default function Home() {
   
@@ -14,12 +14,10 @@ export default function Home() {
       
       <div className="flex justify-center items-center flex-col ">
         <PostHead />
-        <ProtectRoute/>
+        {/* <ProtectRoute/> */}
         <FollowForyou />
         <Post />
-        <Post />
-        <Post />
-        <Post />
+    
       </div>
       {/* <Footer /> */}
     </main>

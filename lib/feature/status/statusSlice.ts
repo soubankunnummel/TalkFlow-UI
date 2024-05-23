@@ -23,10 +23,14 @@ export const statusSclice = createSlice ({
             state.isLogdin = action.payload;
 
         }, 
+        setToken: (state, action :PayloadAction<boolean> ) => {
+            state.token = action.payload;
+
+        }
          
     }
 
 })
 
-export const {setLogged,  } =  statusSclice.actions;
+export const {setLogged,setToken  } =  statusSclice.actions;
 export default statusSclice.reducer;

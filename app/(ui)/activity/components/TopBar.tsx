@@ -13,37 +13,37 @@ export default function TopBar() {
   return (
     <div className="flex justify-center items-center md:w-full overflow-x-auto ">
       <ul className="w-[768px]  h-[42px] gap-x-[6px] flex justify-between items-center md:w-full md:p-2 p-2 px-[16px]">
-        <Link href={"/pages/activity"}>
+        <Link href={"/activity"}>
           <li>
             <ButtonAll value={"All "} />
           </li>
         </Link>
-        <Link href={"/pages/activity/follows"}>
+        <Link href={"/activity/follows"}>
           <li>
             <FollowsBtn value={"Follows"} />
           </li>
         </Link>
-        <Link href={"/pages/activity/replies"}>
+        <Link href={"/activity/replies"}>
           <li>
             <RepliesBtn value={"Replies"} />
           </li>
         </Link>
-        <Link href={"/pages/activity/mentions"}>
+        <Link href={"/activity/mentions"}>
           <li>
             <MentionBtn value={"Mentions"} />
           </li>
         </Link>
-        <Link href={"/pages/activity/quotes"}>
+        <Link href={"/activity/quotes"}>
           <li>
-            <QuotesBtn value={"quotes"} />
+            <QuotesBtn value={"Quotes"} />
           </li>
         </Link>
-        <Link href={"/pages/activity/reposts"}>
+        <Link href={"/activity/reposts"}>
           <li>
             <RepostsBtn value={"Reposts"} />
           </li>
         </Link>
-        <Link href={"/pages/activity/verified"}>
+        <Link href={"/activity/verified"}>
           <li>
             <VerifiedBtn value={"Verified"} />
           </li>

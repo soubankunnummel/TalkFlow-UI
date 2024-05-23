@@ -1,15 +1,59 @@
-import Axios from "../config/axios"
+ 
+import Axios from "../config/axios";
 
 
-export const UserLogin = async (data:object) => {
+/// GET USER PROFILE ////
+export const getUserProfile = async (username:any)=>{
+    console.log(username)
+
     try {
-        const res = await Axios.post('/login',data)
-        if(res.status === 200){
-            return res.data
-        }
+        const res = await Axios.get(`/userprofile/${username}`)
+        return res;
     } catch (error) {
+        return error
+        
+    }
+}
 
-        // console.log(error)
+
+/////// GET ALL USERS //////
+ 
+export const getAllUsers = async () => { 
+    try {
+        const res = await Axios.get('/allusers')
+        return res
+
+    } catch (error) {
+        return error
+    }
+}
+
+
+
+////////// GET CURRENT USER ///////////////
+
+export const getCurrentUser = async () => {
+    try {
+       const res = await Axios.get('/currentuser') 
+       return res
+    } catch (error) {
+        return error
+        
+    }
+}
+
+
+
+  
+
+///////////// FOLLOW UNFOLLOW //////////////
+
+export const followUnfollow = async (username:any) => {
+    console.log(username)
+    try {
+        const res = await Axios.post(`/follow-unfollow/${username}`)
+        return res
+    } catch (error) {
         return error
     }
 }

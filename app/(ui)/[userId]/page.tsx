@@ -1,16 +1,18 @@
+"use client";
+import { RooteState } from "@/lib/store";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { usePathname } from 'next/navigation';
 
-function page() {
+function Page() {
+  const path = usePathname();
+  const user = useSelector((state: RooteState) => state.status.isLogdin);
+
   return (
-    // <section className="w-full h-full flex flex-col   items-center ">
-     <>
-      <Link href={"/@user/replies"}>
-        {" "}
-        <h1>Replies</h1>{" "}
-      </Link>
-      </>
-    // {/* </section> */}
+    <>
+      <h1>user post </h1>
+    </>
   );
 }
 
-export default page;
+export default Page;

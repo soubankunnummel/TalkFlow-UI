@@ -7,17 +7,47 @@ import HomeBtn from "./HomeBtn";
 import ActivityBtn from "./ActivityBtn";
 import UserBtn from "./UserBtn";
 import CreatBtn from "./CreatBtn";
-import {  useSelector } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import { MdSort } from "react-icons/md";
 import CreateModal from "../commen/CreateModal";
-import { useRouter } from "next/navigation";
+import { useRouter  } from "next/navigation";
 import Cookies from 'js-cookie'
 import { RooteState } from "@/lib/store";
+import { setLogged } from "@/lib/feature/status/statusSlice";
+import { useEffect, useState } from "react";
+import { getCurrentUser } from "@/app/actions/user";
+
+
+interface userDetails {
+  name: string;
+  username: string;
+  email: string;
+}
 
 function Nave() {
+  const dispatch = useDispatch()
   const status = useSelector((state:RooteState) => state.status.isLogdin);
+  // const token = Cookies.get('token')
+  const [currentUser,setCurrentUser] = useState<userDetails | null>(null);
   const router = useRouter()
+
+ 
+
+
+  // if(token) { 
+  //  dispatch(setLogged(true))
+  // }
+
+  useEffect(() => {
+
+    getCurrentUser().then((res:any) => {
+      setCurrentUser(res.data)
+    })
+
+  },[])
+
+  ////////////// OPEN CREATE MODAL ////////////
   const handleButtonClick = () => {
   if(status){
 
@@ -76,8 +106,8 @@ function Nave() {
               )}
             </div>
           </Link>
-          <Link href={status ? "/user" : "/"}>
-            <div>
+          <Link href={status ? `/@${currentUser?.username}` : "/"}>
+            <div className="md:absolute md:right-0 ">
               {status ? (
                 <UserBtn />
               ) : (
@@ -99,9 +129,14 @@ function Nave() {
          
          
           </div>
+
+          {/*//////////////// dropdown  //////////////////////*/}
+
+
+          
           <ul
             tabIndex={0}
-            className="dropdown-content  w-[200px]  bg-[#181818]    rounded-box"
+            className="dropdown-content  w-[174px]  bg-[#181818]    rounded-box"
           >
             <li className="w-full  h-12 border-border border rounded-t-xl p-3 font-roboto cursor-pointer">
               <a>Item 1</a>

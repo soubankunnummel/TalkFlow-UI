@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 
 export default function ButtonAll({ value }: { value: string }) {
   const pathname = usePathname();
-  const isActive = pathname === "/pages/activity";
+  const isActive = pathname === "/activity";
   return (
     <button
       className={`w-[100px] h-[34px] border-border border-[1px] flex justify-center items-center rounded-[10px] ${
