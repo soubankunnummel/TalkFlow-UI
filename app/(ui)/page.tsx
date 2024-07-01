@@ -17,6 +17,7 @@ export default function Home() {
         {/* <ProtectRoute/> */}
         <FollowForyou />
         <Post />
+        
     
       </div>
       {/* <Footer /> */}

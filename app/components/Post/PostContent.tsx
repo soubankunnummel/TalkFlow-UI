@@ -4,11 +4,6 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ThreeDot from "@/public/assets/threedot.svg";
-import Like from "@/public/assets/like.svg";
-import redLike from "@/public/assets/red-heart.svg";
-import Coment from "@/public/assets/coment.svg";
-import Share from "@/public/assets/shere.svg";
-import Repost from "@/public/assets/repost.svg";
 import UserName from "../commen/UserName";
 import { checkLike, likeUnlike } from "@/app/actions/post";
 import TimeAgo from "./TimeAgo";
@@ -18,6 +13,10 @@ import { RooteState } from "@/lib/store";
 import { toast } from "sonner";
 import { Notificationsocket } from "@/socket";
 import axios from "axios";
+import useLazyLoadImage from "@/utils/hooks/useLazyLoadImage";
+import LikeSection from "./LikeSection";
+
+
 
 interface PostContentProp {
   id: string;
@@ -45,6 +44,8 @@ function PostContent({
   const isLogin = useSelector((state: RooteState) => state.status.isLogdin);
   const user = useSelector((state: RooteState) => state.user.currentUsre);
   const notificationName = user?.username;
+
+  const {ref, inView} = useLazyLoadImage()
 
   useEffect(() => {
     checkLike(id).then((res: any) => {
@@ -107,7 +108,7 @@ function PostContent({
   };
 
   return (
-    <div className="flex-1 mb-4">
+    <div className="flex-1 mb-4"  ref={ref} >
       {/* post user name three dots */}
       <div className="flex justify-between px-[2%] items-center h-[21px]">
         <div>
@@ -126,12 +127,12 @@ function PostContent({
 
       {/* post content starting */}
       <div className="flex-auto px-[2%] items-center text-start md:w-fit">
-        <Link href={"/pages/@user/post/124"}>
+        <Link href={""}>
           <p className="mb-3">{text}</p>
         </Link>
-        {img && (
+        {img && inView && (
           <Image
-          loading="lazy"
+            loading="lazy"
             alt="Post image"
             src={img}
             width={500}
@@ -143,35 +144,16 @@ function PostContent({
       {/* post content ending */}
 
       {/* Like replies share */}
-      <div className="w-[195.77px] h-[28px] flex justify-evenly">
-        <div onClick={() => handleLike(id)}>
-          <Image alt="Like" src={status ? redLike : Like} />
-        </div>
-        <div>
-          <Image alt="Comment" src={Coment} />
-        </div>
-        <div>
-          <Image alt="Repost" src={Repost} />
-        </div>
-        <div>
-          <Image alt="Share" src={Share} />
-        </div>
-      </div>
+      <LikeSection
+       id={id}
+       status={status}
+       likeCount={likeCount}
+       comments={comments}
+       handleLike={handleLike}
+      
+      />
       {/* Like replies share */}
 
-      <div className="w-[195.77px] h-[28px] flex justify-center items-center gap-x-3">
-        <div>
-          <span className="text-[14.65px] text-[#777777]">
-            {comments.length} replies
-          </span>
-        </div>
-        <div>
-          <span className="text-[14.41px] text-[#777777]">
-            {likeCount} likes
-          </span>
-        </div>
-      </div>
-      {/* like replies share */}
     </div>
   );
 }

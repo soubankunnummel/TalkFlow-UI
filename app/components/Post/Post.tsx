@@ -20,7 +20,7 @@ const Post: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <section>
       {loading ? (
         <div className="w-[620px] h-auto md:w-full p-0 md:p-[2%]">
           <div className="h-auto border-b-[1px] border-[#333638] flex w-full md:w-full mt-4">
@@ -49,7 +49,7 @@ const Post: React.FC = () => {
           </div>
         ))
       )}
-    </>
+    </section>
   );
 };
 
