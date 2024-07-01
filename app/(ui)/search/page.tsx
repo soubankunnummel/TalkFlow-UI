@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import SearchBar from "@/app/components/Search/SearchBar";
 import { getAllUsers } from "@/app/actions/user";
-import { UserCard, UserDetails } from "@/app/components/Search/UserCard";
+import UserCard, {  UserDetails } from "@/app/components/Search/UserCard";
 import {UserSkelton} from '@/app/components/Search/UserSkelton'
 
 const Search: React.FC = () => {

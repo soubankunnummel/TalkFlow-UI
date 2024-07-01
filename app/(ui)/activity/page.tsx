@@ -7,7 +7,7 @@ import UserName from "@/app/components/commen/UserName";
 import Followbtn from "@/app/components/Search/Followbtn";
 import { getAllUsers } from "@/app/actions/user";
 import { useRouter } from "next/navigation";
-import { UserCard, UserDetails } from "@/app/components/Search/UserCard";
+import  UserCard,{ UserDetails } from "@/app/components/Search/UserCard";
 import { truncate } from "fs/promises";
 import { UserSkelton } from "@/app/components/Search/UserSkelton";
 

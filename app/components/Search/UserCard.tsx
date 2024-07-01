@@ -18,7 +18,7 @@ interface UserCardProps {
   isActivity: Boolean;
 }
 
-export const UserCard: React.FC<UserCardProps> = React.memo(
+ const UserCard: React.FC<UserCardProps> = React.memo(
   ({ user, onUserClick, isActivity }) => (
     <div
       className="h-[99.67px] border-b border-border flex flex-col p-5"
@@ -60,3 +60,8 @@ export const UserCard: React.FC<UserCardProps> = React.memo(
     </div>
   )
 );
+
+
+
+UserCard.displayName = "UserCard"
+export default UserCard
