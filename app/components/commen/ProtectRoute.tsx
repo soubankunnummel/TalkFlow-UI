@@ -5,6 +5,7 @@ import Cookie from 'js-cookie'
 import { useRouter ,usePathname} from "next/navigation";
 import { useDispatch } from 'react-redux';
 import { setLogged, setToken } from '@/lib/feature/status/statusSlice';
+import { Notificationsocket } from '@/socket'
 
 
 export default function ProtectRoute() {
@@ -13,6 +14,9 @@ export default function ProtectRoute() {
     const dispatch  = useDispatch()
    
     useEffect(() => {
+      Notificationsocket.on('notification', () => {
+        console.log('connected',Notificationsocket)
+      })
         const token = Cookie.get("token");
         if (!token && pathname !== "auth/Login") {
           router.push("/");
@@ -26,7 +30,14 @@ export default function ProtectRoute() {
           dispatch(setToken(true))
         }
         console.log(`wrong!!`)
+
+
+        return () => {
+          Notificationsocket.off("notification");
+        }
       })
+
+
    return <div></div>
   
 }

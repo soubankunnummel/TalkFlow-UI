@@ -74,11 +74,11 @@ export default function Chat() {
         if (res.data) {
           setMessageList(res.data);
         }
-      });
+      }); 
     }
   }, [conversationId]);
 
-  const handelSendMessage = async () => {
+  const handelSendMessage = async () => { 
     if (!message.trim()) return;  
 
     const messageData: Message = {
@@ -122,7 +122,7 @@ export default function Chat() {
           <h4> {username} </h4>
           <Image src={""} alt="user_image" className="rounded-full" />
         </div>
-        <div className="flex flex-col justify-between h-[400px] md:h-[700px] p-3 text-black border rounded-lg">
+        <div className="flex flex-col justify-between h-[380px] md:h-[650px] p-3 text-black border rounded-lg">
           <ScrollToBottom className=" overflow-auto">
             <div className="grid grid-cols-3 grid-rows-auto overflow-auto p-3 gap-4">
               {messageList?.map((msg, index) => (

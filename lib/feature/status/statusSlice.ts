@@ -14,7 +14,7 @@ const initialState: UserStatus = {
     subToken:false
 
 }  
-
+ 
 export const statusSclice = createSlice ({
     name: "status",
     initialState,

@@ -1,72 +1,47 @@
 "use client";
-import SearchBar from "@/app/components/Search/SearchBar";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import user from "@/public/assets/useravathar.svg";
-import UserName from "@/app/components/commen/UserName";
-import Followbtn from "@/app/components/Search/Followbtn";
-import Followers from "@/app/components/commen/Followers";
-import { getAllUsers, getUserProfile } from "@/app/actions/user";
+
+import React, { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import SearchBar from "@/app/components/Search/SearchBar";
+import { getAllUsers } from "@/app/actions/user";
+import { UserCard, UserDetails } from "@/app/components/Search/UserCard";
+import {UserSkelton} from '@/app/components/Search/UserSkelton'
 
-interface userDetails {
-  name: string;
-  username: string;
-  email: string;
-}
-
-const Search = () => {
-  const [data, setdata] = useState<userDetails[]>([]);
+const Search: React.FC = () => {
+  const [users, setUsers] = useState<UserDetails[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
 
   useEffect(() => {
-    getAllUsers().then((res: any) => {
-      // console.log(res);
-      setdata(res.data);
-    });
+    const fetchUsers = async () => {
+      try {
+        const res:any = await getAllUsers();
+        setUsers(res.data);
+        setLoading(false)
+      } catch (error) {
+        console.error("Failed to fetch users:", error);
+      }
+    };
+
+    fetchUsers();
   }, []);
 
-  /////////////////// handle user profile ///////////////////////
-  const Route = useRouter();
-  const handleClick = (username: string) => {
-    Route.push(`/@${username}`);
-  };
+  const handleUserClick = useCallback((username: string) => {
+    router.push(`/@${username}`);
+  }, [router]);
 
   return (
-    <section className="w-full h-full flex justify-center items-center overflow-y-auto no-scrollbar ">
-      <div className=" w-[600px] md:w-full  p-0 md:p-[3%]  ">
+    <section className="w-full h-full flex justify-center items-center overflow-y-auto no-scrollbar">
+      <div className="w-[600px] md:w-full p-0 md:p-[3%]">
         <SearchBar />
-
-        {data?.map((item) => (
-          <>
-            <div className="h-[99.67px] border-b border-border flex flex-col p-5  ">
-              <div className="flex gap-x-3">
-                <div className="w-[36px] h-[36px] ">
-                  <Image
-                    alt=""
-                    src={user}
-                    className="w-[36px] h-[36px] md:w-[40px] md:h-[40px] "
-                  />
-                </div>
-                <div className=" w-[524px] h-[50px] flex justify-between ">
-                  <div>
-                    <UserName
-                      name={`${item.name}`}
-                      username={`${item.username}`}
-                      onClick={handleClick}
-                    />
-                    <h4 className="text-text text-[14.65px] font-roboto ">
-                      {item.name}{" "}
-                    </h4>
-                  </div>
-                  <Followbtn value={"Follow"} username={`${item.username}`} />
-                </div>
-              </div>
-
-              <Followers count={345} />
-            </div>
-          </>
-        ))}
-  
+        {loading ? (
+          // <div>Loading...</div>
+          <UserSkelton/>
+        ) : (
+          users?.map((item) => (
+            <UserCard key={item.username} user={item} onUserClick={handleUserClick} isActivity={false} />
+          ))
+        )}
       </div>
     </section>
   );

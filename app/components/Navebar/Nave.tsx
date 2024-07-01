@@ -17,6 +17,7 @@ import { RooteState } from "@/lib/store";
 import { setLogged } from "@/lib/feature/status/statusSlice";
 import { useEffect, useState } from "react";
 import { getCurrentUser } from "@/app/actions/user";
+import { setCurrentser } from "@/lib/feature/users/useSlice";
 
 
 interface userDetails {
@@ -27,12 +28,12 @@ interface userDetails {
 
 function Nave() {
   const dispatch = useDispatch()
+  const user = useSelector((state:RooteState) => state.user.currentUsre)
   const status = useSelector((state:RooteState) => state.status.isLogdin);
   // const token = Cookies.get('token')
   const [currentUser,setCurrentUser] = useState<userDetails | null>(null);
   const router = useRouter()
 
- 
 
 
   // if(token) { 
@@ -42,6 +43,7 @@ function Nave() {
   useEffect(() => {
 
     getCurrentUser().then((res:any) => {
+      dispatch(setCurrentser(res.data))
       setCurrentUser(res.data)
     })
 
@@ -106,7 +108,7 @@ function Nave() {
               )}
             </div>
           </Link>
-          <Link href={status ? `/@${currentUser?.username}` : "/"}>
+          <Link href={status ? `/@${user?.username}` : "/"}>
             <div className="md:absolute md:right-0 ">
               {status ? (
                 <UserBtn />

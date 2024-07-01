@@ -7,19 +7,20 @@ import UserName from "@/app/components/commen/UserName";
 import Followbtn from "@/app/components/Search/Followbtn";
 import { getAllUsers } from "@/app/actions/user";
 import { useRouter } from "next/navigation";
+import { UserCard, UserDetails } from "@/app/components/Search/UserCard";
+import { truncate } from "fs/promises";
+import { UserSkelton } from "@/app/components/Search/UserSkelton";
 
-interface userDetails {
-  name: string;
-  username: string;
-  email: string;
-}
+ 
 export default function Activity() {
-  const [data, setdata] = useState<userDetails[]>([]);
+  const [users, setUsers] = useState<UserDetails[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     getAllUsers().then((res: any) => {
       // console.log(res);
-      setdata(res.data);
+      setLoading(false)
+      setUsers(res.data);
     });
   }, []);
 
@@ -30,44 +31,19 @@ export default function Activity() {
   };
 
   return (
-    <>
-      {/* ---- activity page ------- */}
+ 
 
-      {data.map((item,index) => (
-        <div className="w-full flex justify-center items-center p-2 "key={index}>
-          <div className="relative">
-            {" "}
-            <Image
-              alt="user icon"
-              src={avathar}
-              className="w-[22px] h-[22px] absolute right-0 bottom-0 "
-            />
-            <Image
-              alt="user image"
-              src={User}
-              className="w-[36px] h-[36px]  "
-            />
-          </div>
-          <div className="w-[524px] h-[66.67px] border-b border-border flex justify-between items-center p-3 ">
-            <div>
-              <UserName
-                name={`${item.name}`}
-                username={`${item.username}`}
-                onClick={handleClick}
-              />
-              <h4 className="text-text text-[14.65px] font-roboto">
-                Follow Suggetion
-              </h4>
-            </div>
-            <div>
-              {" "}
-              <Followbtn value="Follow" username={`${item.username}`} />
-            </div>
-          </div>
-        </div>
-      ))}
-
-      {/* ---- activity page ------- */}
-    </>
+    <section className="w-full h-full flex justify-center items-center overflow-y-auto no-scrollbar">
+    <div className="w-[600px] md:w-full p-0 md:p-[3%]">
+     
+      {loading ? (
+        <UserSkelton/>
+      ) : (
+        users?.map((item) => (
+          <UserCard key={item.username} user={item} onUserClick={handleClick} isActivity={true} />
+        ))
+      )}
+    </div>
+  </section>
   );
 }
