@@ -37,6 +37,7 @@ export default function CreateModal() {
                   {/* <input className=" ">
                     
                   </input> */}
+                  <input type="file" name="" id="" />
                   <Image alt="ImgIcon" src={ImageIcon} />
                 </div>
               </div>
