@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
 import CreateModal from "../commen/CreateModal";
-
+ 
 interface CreatBtnProps {
   handleButtonClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function CreatBtn({handleButtonClick}: CreatBtnProps) {
+export default function CreatBtn() {
    
   return (
     <button

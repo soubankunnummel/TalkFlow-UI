@@ -36,7 +36,7 @@ const LikeSection: React.FC<LikeSectionProps> = ({ id, status, likeCount, commen
           <span className="text-[14.65px] text-[#777777]">
             {comments.length} replies
           </span>
-        </div>w
+        </div>
         <div>
           <span className="text-[14.41px] text-[#777777]">
             {likeCount} likes

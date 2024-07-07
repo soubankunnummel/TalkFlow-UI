@@ -12,7 +12,7 @@ export default function Home() {
     <main>
       {/* <Nave /> */}
       
-      <div className="flex justify-center items-center flex-col ">
+      <div className="flex justify-center items-center flex-col relative ">
         <PostHead />
         {/* <ProtectRoute/> */}
         <FollowForyou />

@@ -1,63 +1,169 @@
 "use client";
-import React from "react";
-import Close from "./Close";
-import More from "@/public/assets/More.svg";
-import Image from "next/image";
+
 import User from "@/public/assets/useravathar.svg";
 import ImageIcon from "@/public/assets/ImageIcon.svg";
-import PostBtn from "../Post/PostBtn";
 
-export default function CreateModal() {
-  return (
-    <>
-      <dialog id="my_modal_2" className="modal md:hidden ">
-        <div className="  w-[620px] h-[292.33px]  ">
-          <div className="grid  grid-cols-1 grid-rows-1 p-2 bg-black rounded-t">
-            <h3 className="col-start-1 row-start-1">New thead</h3>
-            <Image
-              alt="moge image"
-              src={More}
-              className="w-[24px] h-[24px] col-start-3 row-start-1  "
-            />
-          </div>
-          <div className="rounded-[16px] border  border-border p-[5%]  bg-primery ">
-            <div className="grid grid-cols-3 grid-rows-2  p-[5%]  ">
-              <div className=" flex gap-x-3   ">
-                <Image
-                  alt="User avathar"
-                  src={User}
-                  className="w-[36px] h-[36px] "
-                />
-                <h3>Souban_Kunnummel</h3>
-              </div>
-              <div className="col-start-1 row-start-2  h-[36px] flex gap-x-6  items-center ">
-                <div className="w-[2px] h-[32px] bg-[#333638] ms-4 "></div>
-                <div className="flex flex-col ">
-                  <input type="text" name="" id="" placeholder="Start new thread..." className="text-[12.3px] outline-none bg-transparent w-full text-text"/>
-                  {/* <input className=" ">
-                    
-                  </input> */}
-                  <input type="file" name="" id="" />
-                  <Image alt="ImgIcon" src={ImageIcon} />
-                </div>
-              </div>
-              <div className="col-start-1 row-start-3 h-[16px] w-[48px]  ">
-                <Image
-                  alt="user avathar"
-                  src={User}
-                  className="w-[16px] h-[16px] ms-2 "
-                />
-              </div>
-            </div>
-            <div className="flex justify-end">
-              <PostBtn value="Post" />
-            </div>
-          </div>
-        </div>
-        <form method="dialog" className="modal-backdrop">
-          <button>close</button>
-        </form>
-      </dialog>
-    </>
-  );
+import React, { useEffect, useRef, useState } from "react";
+import UserName from "./UserName";
+import Image from "next/image";
+import PostBtn from "../Post/PostBtn";
+import { useForm } from "react-hook-form";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import ConfirmModal from "./ConfirmationModal";
+import { cretePost, getPosts } from "@/app/actions/post";
+import { useDispatch, useSelector } from "react-redux";
+import { addPost } from "@/lib/feature/post/postSlice";
+import { RooteState } from "@/lib/store";
+
+
+interface FormData {
+  text: string;
+  file: FileList;
 }
+
+interface CreateModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
+  const { register, handleSubmit, reset, watch } = useForm<FormData>();
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [showConfirm, setShowConfirm] = useState(false);
+  
+  const textValue = watch();
+  const dispatch = useDispatch();
+  const posts = useSelector((state: RooteState) => state.post.posts);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        if (textValue.file) {
+          setShowConfirm(true);
+        } else {
+          onClose();
+        }
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, onClose, textValue]);
+
+  const handlePost = (data: FormData) => {
+    const formData = new FormData();
+
+    if ( data.text || data.file && data.file.length > 0) {
+    formData.append('text', data.text);
+    formData.append('image', data.file[0]);
+  }
+
+    cretePost(formData).then((res:any) =>{
+      console.log(res.data)
+      dispatch(addPost(res.data))
+    })
+
+    console.log(posts);
+    onClose();
+    reset();
+  };
+
+ 
+
+
+  const handleConfirm = () => {
+    setShowConfirm(false);
+    onClose();
+    reset();
+  };
+
+  const handleCancel = () => {
+    setShowConfirm(false);
+  };
+
+  if (!isOpen) {
+    return null;
+  }
+
+  return (
+    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+      <div
+        className="rounded-2xl w-[40%] bg-[#181818] flex flex-col border-border p-5 border shadow-lg"
+        ref={modalRef}
+      >
+        <h1 className="text-center">New thread</h1>
+        <form onSubmit={handleSubmit(handlePost)}>
+          <div className="flex gap-5 p-5">
+            {/* User profile */}
+            <div className="gap-3 flex items-center flex-col">
+              <div className="w-[35px] h-[35px] rounded-full">
+                <Image
+                  alt="User avatar"
+                  src={User}
+                  className="w-[36px] h-[36px]"
+                />
+              </div>
+              <div className="w-[1px] h-[20px] bg-gray-600"></div>
+              <div className="w-[16px] h-[16px] flex justify-center items-center">
+                <Image
+                  alt="user avatar"
+                  src={User}
+                  className="w-[16px] h-[16px]"
+                />
+              </div>
+            </div>
+            {/* User profile */}
+
+            <div className="flex flex-col">
+              <UserName name="Souban" username="souban" onClick={() => {}} />
+              <input
+                type="text"
+                id=""
+                className="w-full bg-transparent outline-none placeholder:text-[12px] placeholder:text-text mb-2 text-[12px] text-text"
+                placeholder="Start thread..."
+                {...register("text")}
+              />
+              <input
+                type="file"
+                id="file"
+                className="hidden"
+                {...register("file")}
+              />
+              <Image
+                alt="ImgIcon"
+                src={ImageIcon}
+                onClick={() => document.getElementById("file")?.click()}
+                className="cursor-pointer"
+              />
+            </div>
+          </div>
+
+          <div className="flex justify-end">
+            <PostBtn value="Post" />
+          </div>
+        </form>
+      </div>
+      {showConfirm && (
+        <ConfirmModal
+          isOpen={showConfirm}
+          title="Confirm to discard"
+          // message="You have unsaved changes. Are you sure you want to discard them?"
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
+      )}
+    </div>
+  );
+};
+
+export default CreateModal;

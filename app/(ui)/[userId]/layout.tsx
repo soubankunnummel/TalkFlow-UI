@@ -1,7 +1,7 @@
 "use client";
 import { RooteState } from "@/lib/store";
 import { useDispatch, useSelector } from "react-redux";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import UserName from "@/app/components/commen/UserName";
 import Followers from "@/app/components/commen/Followers";
 import FollowersImg from "@/public/assets/replieavathar.svg";
@@ -28,7 +28,7 @@ export default function Layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const Router = useRouter();
-  const path = usePathname();
+  const path = useParams();
   const user = useSelector((state: RooteState) => state.status.isLogdin);
   const dispatch = useDispatch()
 
@@ -37,9 +37,10 @@ export default function Layout({
   //////////   FETCH USER INFORMATIONS /////////////
 
   const [userProfile, setUserProfile] = useState<userDetails | null>(null);
-  const username = path.slice(2,path.length)
+  // console.log(path.userId)
+  const username = path.userId
   useEffect(() => {
-    getUserProfile(username).then((res:any) => {
+    getUserProfile(path.userId).then((res:any) => {
       setUserProfile(res.data)
       // console.log(res);
     });
@@ -52,7 +53,7 @@ export default function Layout({
         dispatch(setLogged(false))
       }
     })
-  }, );
+  }, []);
 
 
   
@@ -114,7 +115,7 @@ const handleChat = async () => {
         <Link href={"/@user"}>
           <div
             className={`flex justify-center items-center md:w-full  w-[190.67px] h-[48.67px]  ${
-              path === "/@user" ? "border-b" : ""
+              username === "/@user" ? "border-b" : ""
             }`}
           >
             <h1>Threads</h1>
@@ -123,7 +124,7 @@ const handleChat = async () => {
         <Link href={"/@user/replies"}>
           <div
             className={`flex justify-center items-center   md:w-full w-[190.67px] h-[48.67px] ${
-              path === "/@user/replies" ? "border-b" : ""
+              username === "/@user/replies" ? "border-b" : ""
             }`}
           >
             <h1>Replies</h1>
@@ -132,7 +133,7 @@ const handleChat = async () => {
         <Link href={"/@user/reposts"}>
           <div
             className={`flex justify-center items-center  md:w-full w-[190.67px] h-[48.67px] ${
-              path === "/@user/reposts" ? "border-b" : ""
+              username === "/@user/reposts" ? "border-b" : ""
             }`}
           >
             <h1>Reposts</h1>

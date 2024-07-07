@@ -63,7 +63,7 @@ function Footer() {
         </Link>
        
         <div onClick={handleButtonClick}>
-            <CreatBtn handleButtonClick={handleButtonClick}/>
+            <CreatBtn />
           </div>
      
         <Link href={"/activity"}>

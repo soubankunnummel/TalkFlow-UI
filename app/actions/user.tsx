@@ -4,7 +4,6 @@ import Axios from "../config/axios";
 
 /// GET USER PROFILE ////
 export const getUserProfile = async (username:any)=>{
-    console.log(username)
 
     try {
         const res = await Axios.get(`/userprofile/${username}`)

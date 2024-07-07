@@ -3,6 +3,7 @@ import { RooteState } from "@/lib/store";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { usePathname } from 'next/navigation';
+import Posts from "./post/[postId]/page";
 
 function Page() {
   const path = usePathname();
@@ -10,7 +11,8 @@ function Page() {
 
   return (
     <>
-      <h1>user post </h1>
+    {/* <<<-- FEED POSTS ->>> */}
+     <Posts/>
     </>
   );
 }
