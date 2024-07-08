@@ -6,7 +6,7 @@ const Axios = axios.create({
     // baseURL:  process.env.NODE_ENV === 'production' 
     //           ? 'https://talk-flow-sever2.onrender.com' 
     //           : 'http://localhost:8000/api',
-    baseURL: 'https://talk-flow-sever2.onrender.com/api' ,
+    baseURL: 'https://talk-flow-sever2.onrender.com/api',
     // baseURL: 'http://localhost:8000/api',
     
     headers:{

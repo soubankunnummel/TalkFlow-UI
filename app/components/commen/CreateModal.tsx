@@ -10,7 +10,7 @@ import PostBtn from "../Post/PostBtn";
 import { useForm } from "react-hook-form";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import ConfirmModal from "./ConfirmationModal";
-import { cretePost, getPosts } from "@/app/actions/post";
+import { cretePost } from "@/app/actions/post";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "@/lib/feature/post/postSlice";
 import { RooteState } from "@/lib/store";
@@ -69,7 +69,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
   }
 
     cretePost(formData).then((res:any) =>{
-      console.log(res.data)
+      console.log(res)
       dispatch(addPost(res.data))
     })
 

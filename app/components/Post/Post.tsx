@@ -20,12 +20,13 @@ const Post: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if(user?.username === username){
+    if(user&& user?.username === username){
       getFeed()
       .then((res: any) => {
         console.log(res)
         if (Array.isArray(res.data)) {
           dispatch(setPosts(res.data));
+          console.log(res.data)
           setLoading(false);
         } else {
           console.error('Received data is not an array:', res.data);
@@ -45,6 +46,7 @@ const Post: React.FC = () => {
       .then((res: any) => {
         if (Array.isArray(res.data)) {
           dispatch(setPosts(res.data));
+          console.log(res.data)
           setLoading(false);
         } else {
           console.error('Received data is not an array:', res.data);
@@ -76,7 +78,7 @@ const Post: React.FC = () => {
   }
 
   if (!Array.isArray(posts) || posts.length === 0) {
-    return <div>No posts available.</div>;
+    return <div className='text-center text-text mt-5'>No posts available.</div>;
   }
 
   return (

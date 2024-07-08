@@ -1,11 +1,12 @@
 "use client";
 
 import React from "react";
-import { usePathname } from "next/navigation";
+import { useParams,  } from "next/navigation";
 
 export default function UserBtn() {
-  const pathname = usePathname();
-  const isActive  = /^\/@[^/]+(\/(replies|reposts)?)?$/.test(pathname);
+  const pathname = useParams();
+  // const isActive  = /^\/@[^/]+(\/(replies|reposts)?)?$/.test(pathname);
+  const isActive  = pathname.userId
   return (
     <button
       className={`w-24 h-[70px] md:w-[82.4px] md:h-[68px] rounded-xl hover:bg-[#FFFFFF0D] flex justify-center items-center ${
