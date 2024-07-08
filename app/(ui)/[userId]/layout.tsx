@@ -28,7 +28,7 @@ export default function Layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const Router = useRouter();
-  const path = useParams();
+  const path = usePathname();
   const user = useSelector((state: RooteState) => state.status.isLogdin);
   const dispatch = useDispatch()
 
@@ -38,11 +38,13 @@ export default function Layout({
 
   const [userProfile, setUserProfile] = useState<userDetails | null>(null);
   // console.log(path.userId)
-  const username = path.userId
+  // console.log(path.slice(2))
+
+  const username = path.slice(2)
   useEffect(() => {
-    getUserProfile(path.userId).then((res:any) => {
+    getUserProfile(username).then((res:any) => {
       setUserProfile(res.data)
-      // console.log(res);
+      console.log(res.data);
     });
 
     getCurrentUser().then((res:any) => {

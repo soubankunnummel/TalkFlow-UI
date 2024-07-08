@@ -100,7 +100,7 @@ function Nave() {
               )}
             </div>
           </Link>
-          <Link href={status ? `/${user?.username}` : "/"}>
+          <Link href={status ? `/@${user?.username}` : "/"}>
             <div className="md:absolute md:right-0 ">
               {status ? (
                 <UserBtn />

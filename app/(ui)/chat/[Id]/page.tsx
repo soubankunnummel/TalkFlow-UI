@@ -39,7 +39,7 @@ export default function Chat() {
 
     socket.emit("join_room", room);
     getCurrentUser().then((res:any) => {
-      setSenderId(res?.data?._id);
+      setSenderId(res?.data?._id); 
     });
 
     getUserProfile(username).then((res: any) => {
@@ -47,7 +47,7 @@ export default function Chat() {
     });
 
     socket.on("receive_message", (data: Message) => {
-      console.log(data);
+      // console.log(data);
       setMessageList((list) => [...list, data]);
     });
 
@@ -55,8 +55,8 @@ export default function Chat() {
       socket.off("receive_message");
     };
   },);
-
-  console.log(messageList)
+ 
+  // console.log(messageList)
 
   useEffect(() => {
     if (senderId && receiverId) {
@@ -102,7 +102,7 @@ export default function Chat() {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      event.preventDefault(); // Prevent the default action (submitting the form)
+      event.preventDefault();  
       handelSendMessage();
     }
   };
@@ -123,35 +123,39 @@ export default function Chat() {
           <Image src={""} alt="user_image" className="rounded-full" />
         </div>
         <div className="flex flex-col justify-between h-[380px] md:h-[650px] p-3 text-black border rounded-lg">
-          <ScrollToBottom className=" overflow-auto">
-            <div className="grid grid-cols-3 grid-rows-auto overflow-auto p-3 gap-4">
+        <ScrollToBottom className="overflow-auto">
+            <div className="flex flex-col space-y-4 p-3">
               {messageList?.map((msg, index) => (
                 <div
                   key={index}
-                  className={`col-start-${
-                    msg.sender == senderId ? "2" : "1"
-                  } col-span-2 p-2 rounded-lg ${
-                    msg.sender == senderId ? "bg-white" : "bg-slate-300"
+                  className={`flex ${
+                    msg.sender === senderId ? 'justify-end' : 'justify-start'
                   }`}
                 >
-                  {msg.text}
-                  <div className="flex justify-between text-xs font-bold">
-                    <h1>{msg.time} </h1>
-                    <h1>{msg.sender === senderId ? "You" : username} </h1>
+                  <div
+                    className={`max-w-[70%] p-2 rounded-lg ${
+                      msg.sender === senderId
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-gray-200 text-black'
+                    }`}
+                  >
+                    <p>{msg.text}</p>
+                    <div className="flex justify-between gap-3 text-xs font-bold mt-1">
+                      <span>{msg.time}</span>
+                      <span>{msg.sender === senderId ? 'You' : username}</span>
+                    </div>
                   </div>
                 </div>
-               
               ))}
-
             </div>
-            </ScrollToBottom>
+          </ScrollToBottom>
           <div className="w-full flex justify-between items-center gap-2 p-3">
             <input
               type="text"
               placeholder="Message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              onKeyDown={handleKeyDown} // Add this line to handle Enter key press
+              onKeyDown={handleKeyDown}  
               className="text-white p-3 flex-1 bg-transparent h-14 outline-none border rounded-lg"
             />
             <IoMdSend

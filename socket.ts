@@ -8,3 +8,4 @@ export const socket = io("https://chat-service-o3sa.onrender.com", {
 export const Notificationsocket = io("http://localhost:8002", {
   transports: ["websocket", "polling"],
 });
+ 

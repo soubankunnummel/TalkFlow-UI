@@ -12,7 +12,7 @@ export const sendMessages = async (
       {
         headers: {
           "Content-Type": "application/json",
-        },
+        }, 
       }
     );
     return res;
