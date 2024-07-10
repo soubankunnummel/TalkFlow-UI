@@ -67,7 +67,7 @@ function PostContent({
     return () => {
       Notificationsocket.off("notification", handleNotification);
     };
-  }, [id, notificationName, username]);
+  }, [id, notificationName, username]); 
 
   const handleLike = async (postId: string) => {
     if (isLogin) {
@@ -82,7 +82,7 @@ function PostContent({
         try {
           await axios
             .post(
-              `http://localhost:8002/api/notification/${username}`,
+              `https://notification-service-n601.onrender.com/api/notification/${username}`,
               {
                 type: "like",
               },
