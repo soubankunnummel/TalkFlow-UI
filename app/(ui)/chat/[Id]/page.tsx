@@ -122,7 +122,7 @@ export default function Chat() {
           <h4> {username} </h4>
           <Image src={""} alt="user_image" className="rounded-full" />
         </div>
-        <div className="flex flex-col justify-between h-[380px] md:h-[650px] p-3 text-black border rounded-lg">
+        <div className="flex flex-col justify-between h-[490px] md:h-[650px] p-3 text-black border rounded-lg">
         <ScrollToBottom className="overflow-auto">
             <div className="flex flex-col space-y-4 p-3">
               {messageList?.map((msg, index) => (
