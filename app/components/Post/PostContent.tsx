@@ -79,6 +79,8 @@ function PostContent({
       });
 
       if (notificationName && notificationName !== username) {
+
+        /// chat server connecting
         try {
           await axios
             .post(
