@@ -45,10 +45,10 @@ export default function Layout({
     getUserProfile(username).then((res:any) => {
       setUserProfile(res.data)
       console.log(res.data);
-    });
+    }); 
 
     getCurrentUser().then((res:any) => {
-
+      console.log(res.data)
       if(res.data.username === username){
         dispatch(setLogged(true))
       }else{
@@ -96,6 +96,7 @@ const handleChat = async () => {
         {user ? (
           <button
             className={`w-full  bg-transparent rounded-xl h-[34px] text-white border border-border`}
+            onClick={() => {}}
           >
             Edit Profile
           </button>
