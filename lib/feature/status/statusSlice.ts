@@ -11,7 +11,7 @@ interface UserStatus  {
 const initialState: UserStatus = {
     isLogdin:false,
     token:false,
-    subToken:false
+    subToken:false 
 
 }  
  

@@ -17,7 +17,7 @@ const initialState :userSlice = {
             }
     }
 
-})
+}) 
 
 export const {setCurrentser} = userSlice.actions
 export default userSlice.reducer

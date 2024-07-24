@@ -12,8 +12,9 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { getUserProfile ,getCurrentUser} from "@/app/actions/user";
+import { getUserProfile ,getCurrentUser, updateUserProfile} from "@/app/actions/user";
 import { setLogged } from "@/lib/feature/status/statusSlice";
+import Modal from "@/app/components/commen/Modal";
 
 
 
@@ -21,6 +22,9 @@ interface userDetails {
   name: string;
   username: string;
   email: string;
+  bio: string;
+  link: string;
+  profilePic: string;
 }
 
 
@@ -37,6 +41,7 @@ export default function Layout({
   //////////   FETCH USER INFORMATIONS /////////////
 
   const [userProfile, setUserProfile] = useState<userDetails | null>(null);
+  const [showEdit, setShowEdit] = useState(false)
   // console.log(path.userId)
   // console.log(path.slice(2))
 
@@ -44,7 +49,7 @@ export default function Layout({
   useEffect(() => {
     getUserProfile(username).then((res:any) => {
       setUserProfile(res.data)
-      console.log(res.data);
+      // console.log(res.data);
     }); 
 
     getCurrentUser().then((res:any) => {
@@ -66,6 +71,24 @@ const handleChat = async () => {
 };
 
 
+
+const handleEdit = () => {
+  setShowEdit(true);
+};
+
+const handleSaveProfile = async (newProfileData: any) => {
+  console.log(newProfileData)
+  try {
+    updateUserProfile(newProfileData).then((res) => {
+      setUserProfile(res)
+    })
+    // setUserProfile(updatedProfile);
+    setShowEdit(false);
+  } catch (error) {
+    console.error("Failed to update profile:", error);
+    // Handle error (e.g., show an error message to the user)
+  }
+};
 
 
 
@@ -96,9 +119,9 @@ const handleChat = async () => {
         {user ? (
           <button
             className={`w-full  bg-transparent rounded-xl h-[34px] text-white border border-border`}
-            onClick={() => {}}
+            onClick={ handleEdit}
           >
-            Edit Profile
+            Edit Profile 
           </button>
         ) : (
           <>
@@ -114,6 +137,21 @@ const handleChat = async () => {
           </>
         )}
       </div>
+
+      {userProfile && (
+        <Modal
+          isOpen={showEdit}
+          onClose={() => setShowEdit(false)}
+          onSave={handleSaveProfile}
+          initialData={{
+            username: userProfile.username,
+            bio: userProfile.bio || "",
+            link: userProfile.link || "",
+          
+            profilePic: userProfile.profilePic ?  userProfile.profilePic : User
+          }}
+        />
+      )}
       <div className="flex w-[572px] md:w-full justify-between items-center mt-4">
         <Link href={"/@user"}>
           <div

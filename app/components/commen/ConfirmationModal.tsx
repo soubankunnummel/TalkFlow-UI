@@ -16,7 +16,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   onCancel,
 }) => {
   if (!isOpen) {
-    return null;
+    return null; 
   }
 
   return (

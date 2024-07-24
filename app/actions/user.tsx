@@ -56,3 +56,21 @@ export const followUnfollow = async (username:any) => {
         return error
     }
 }
+
+
+
+///// edit profile //////////
+
+export const updateUserProfile = async(data:any) => {
+
+    try {
+        const res = await Axios.patch('/edit',data)
+        if (res.status === 200) {
+            return res.data.user;
+          } else {
+            throw new Error('Failed to update profile');
+          }
+    } catch (error) {
+        return error
+    }
+}

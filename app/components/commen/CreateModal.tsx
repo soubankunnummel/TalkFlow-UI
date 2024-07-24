@@ -151,7 +151,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
           <div className="flex justify-end">
             <PostBtn value="Post" />
           </div>
-        </form>
+        </form> 
       </div>
       {showConfirm && (
         <ConfirmModal
